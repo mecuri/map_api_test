@@ -1,96 +1,131 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>지도 API 비교 테스트</title>
-    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta
+      name="viewport"
+      content="initial-scale=1,maximum-scale=1,user-scalable=no"
+    />
     <!-- KAKAO MAP -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3b57fcd9341e3f1a8b6995c8ceb8b04f"></script>
+    <script
+      type="text/javascript"
+      src="//dapi.kakao.com/v2/maps/sdk.js?appkey=3b57fcd9341e3f1a8b6995c8ceb8b04f"
+    ></script>
     <!-- MAPBOX MAP -->
-    <link href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css" rel="stylesheet">
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.12.0/mapbox-gl.js"></script>
     <!-- GOOGLE MAP -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTLCGN-6tcIGb2LxVcB41k6H0TDbohnoI&v=weekly&callback=googleMapInit" defer></script>
+    <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTLCGN-6tcIGb2LxVcB41k6H0TDbohnoI&v=weekly&callback=googleMapInit"
+      defer
+    ></script>
     <!-- VWORLD MAP (개꾸짐) -->
-    <script type="text/javascript" src="http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=38DFC4CA-CA73-3E0F-8EEC-5E7E5B834EF7"></script>
+    <script
+      type="text/javascript"
+      src="http://map.vworld.kr/js/vworldMapInit.js.do?version=2.0&apiKey=38DFC4CA-CA73-3E0F-8EEC-5E7E5B834EF7"
+    ></script>
 
     <!-- COMMON -->
     <script src="https://code.jquery.com/jquery-3.6.3.js"></script>
 
     <style>
-    html, body { margin: 0; padding: 0; width:100%; height:100%;}
-    .map-state {
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .map-state {
         display: flex;
         width: 100%;
-        height:50%;
-    }
-    .map-state>div {height:100%;width:50%;}
-    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        height: 50%;
+      }
+      .map-state > div {
+        height: 100%;
+        width: 50%;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="map-state">
-        <div id="kakao" style='background:blue;'></div>
-        <div id="mapbox" style='background:red;'></div>
+      <div id="kakao" style="background: blue"></div>
+      <div id="mapbox" style="background: red"></div>
     </div>
     <div class="map-state">
-        <div id="google" style='background:black;'></div>
-        <div id="vworld" style='background:green;'></div>
+      <div id="google" style="background: black"></div>
+      <div id="vworld" style="background: green"></div>
     </div>
-</body>
+  </body>
 
-<script>
+  <script>
     let kakaoMap;
     let mapboxMap;
     let googleMap;
 
     // 모든 HTML 로드되고 실행
     $(() => {
-        kakaoInit();
-        mapboxInit();
-        vworldInit();
+      kakaoInit();
+      mapboxInit();
+      vworldInit();
     });
 
     function kakaoInit() {
-        const mapEl = document.getElementById('kakao');
-        const mapOption = {
-            center: new kakao.maps.LatLng(37.48163184020214, 126.92413386794908),
-            level: 1
-        };
-        kakaoMap = new kakao.maps.Map(mapEl, mapOption);
+      const mapEl = document.getElementById("kakao");
+      const mapOption = {
+        center: new kakao.maps.LatLng(37.48163184020214, 126.92413386794908),
+        level: 1,
+      };
+      kakaoMap = new kakao.maps.Map(mapEl, mapOption);
     }
 
     function mapboxInit() {
-        mapboxgl.accessToken = 'pk.eyJ1Ijoic29uc2FuZ2dpIiwiYSI6ImNrOWNhZnQ3bjAyajQza216N2UzeGEzZnAifQ.Rv6bWwRaZwtPC2rlKrgDjg';
-        mapboxMap = new mapboxgl.Map({
-            container: 'mapbox', // container ID
-            style: 'mapbox://styles/sonsanggi/cku3l0nkd0r1b19qjpqn2fec0', // style URL
-            center: [126.92413386794908, 37.48163184020214], // starting position [lng, lat]
-            zoom: 17
-        });
-        mapboxMap.on("click", ({lngLat}) => new mapboxgl.Marker().setLngLat([lngLat.lng, lngLat.lat]).addTo(mapboxMap));
+      mapboxgl.accessToken =
+        "pk.eyJ1Ijoic29uc2FuZ2dpIiwiYSI6ImNrOWNhZnQ3bjAyajQza216N2UzeGEzZnAifQ.Rv6bWwRaZwtPC2rlKrgDjg";
+      mapboxMap = new mapboxgl.Map({
+        container: "mapbox", // container ID
+        style: "mapbox://styles/sonsanggi/cku3l0nkd0r1b19qjpqn2fec0", // style URL
+        center: [126.92413386794908, 37.48163184020214], // starting position [lng, lat]
+        zoom: 17,
+      });
+      mapboxMap.on("click", ({ lngLat }) =>
+        new mapboxgl.Marker()
+          .setLngLat([lngLat.lng, lngLat.lat])
+          .addTo(mapboxMap)
+      );
     }
 
     function googleMapInit() {
-        googleMap = new google.maps.Map(document.getElementById("google"), {
-            center: { lat: 37.48163184020214, lng: 126.92413386794908 },
-            zoom: 19,
-        });
+      googleMap = new google.maps.Map(document.getElementById("google"), {
+        center: { lat: 37.48163184020214, lng: 126.92413386794908 },
+        zoom: 19,
+      });
     }
 
     function vworldInit() {
-        vw.ol3.MapOptions = {
-            basemapType: vw.ol3.BasemapType.GRAPHIC
-            , controlDensity: vw.ol3.DensityType.EMPTY
-            , interactionDensity: vw.ol3.DensityType.BASIC
-            , controlsAutoArrange: true
-            , homePosition: vw.ol3.CameraPosition
-            , initPosition: vw.ol3.CameraPosition
-        };
+      vw.ol3.MapOptions = {
+        basemapType: vw.ol3.BasemapType.GRAPHIC,
+        controlDensity: vw.ol3.DensityType.EMPTY,
+        interactionDensity: vw.ol3.DensityType.BASIC,
+        controlsAutoArrange: true,
+        homePosition: vw.ol3.CameraPosition,
+        initPosition: vw.ol3.CameraPosition,
+      };
 
-        vmap = new vw.ol3.Map("vworld", vw.ol3.MapOptions);
+      const param = {};
+
+      vmap = new vw.ol3.Map("vworld", vw.ol3.MapOptions);
     }
-    </script>
-
+  </script>
 </html>
